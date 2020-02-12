@@ -22,10 +22,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
   // NO TOUCH OR I KILL YOU!
-  private static final int kFrontLeftChannel = 1;
-  private static final int kRearLeftChannel = 3;
-  private static final int kFrontRightChannel = 0;
-  private static final int kRearRightChannel = 2;
+  private static final int kFrontLeftChannel = 2;
+  private static final int kRearLeftChannel = 4;
+  private static final int kFrontRightChannel = 3;
+  private static final int kRearRightChannel = 1;
 
   private static final int kJoystickChannel = 0;
 
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   VictorSPX frontLeft = new VictorSPX(kFrontLeftChannel);
   VictorSPX rearLeft = new VictorSPX(kRearLeftChannel);
   VictorSPX frontRight = new VictorSPX(kFrontRightChannel);
-  VictorSPX rearRight = new VictorSPX(kRearRightChannel); 
+  VictorSPX rearRight = new VictorSPX(kRearRightChannel);
 
   @Override
   public void robotInit() {
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 
     // Use the joystick X axis for lateral movement, Y axis for forward
     // movement, and Z axis for rotation.
-    driveCartesian(m_maxSpeed, m_stick.getRawAxis(4), -m_stick.getRawAxis(1), getZRotation());
+    driveCartesian(m_maxSpeed, m_stick.getRawAxis(1), -m_stick.getRawAxis(4), -getZRotation());
   }
 
   private void driveCartesian(double m_maxSpeed, double ySpeed, double xSpeed, double zRotation)
@@ -68,10 +68,10 @@ public class Robot extends TimedRobot {
 
     normalize(wheelSpeeds);
 
-    frontLeft.set(ControlMode.PercentOutput, wheelSpeeds[0]*m_maxSpeed);
+    frontLeft.set(ControlMode.PercentOutput, -wheelSpeeds[0]*m_maxSpeed);
     rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*m_maxSpeed);
-    frontRight.set(ControlMode.PercentOutput, wheelSpeeds[2]*m_maxSpeed);
-    frontRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*m_maxSpeed);
+    frontRight.set(ControlMode.PercentOutput, -wheelSpeeds[2]*m_maxSpeed);
+    rearRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*m_maxSpeed);
   }
 
   private double getZRotation() 
