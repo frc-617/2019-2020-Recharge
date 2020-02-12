@@ -7,39 +7,82 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  private static final int kFrontLeftChannel = 1;
-  private static final int kRearLeftChannel = 3;
-  private static final int kFrontRightChannel = 0;
-  private static final int kRearRightChannel = 2;
-
-  private MecanumDrive m_robotDrive;
+  private final VictorSPX frontLeft;
+  private final VictorSPX rearLeft;
+  private final VictorSPX frontRight;
+  private final VictorSPX rearRight;
 
   /**
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
-    Spark frontLeft = new Spark(kFrontLeftChannel);
-    Spark rearLeft = new Spark(kRearLeftChannel);
-    Spark frontRight = new Spark(kFrontRightChannel);
-    Spark rearRight = new Spark(kRearRightChannel);
-
-    m_robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-    m_robotDrive.setSafetyEnabled(true);
+    frontLeft = new VictorSPX(Constants.kFrontLeftChannel);
+    rearLeft = new VictorSPX(Constants.kRearLeftChannel);
+    frontRight = new VictorSPX(Constants.kFrontRightChannel);
+    rearRight = new VictorSPX(Constants.kRearRightChannel);
   }
 
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation)
   {
-    m_robotDrive.driveCartesian(ySpeed, xSpeed, zRotation);
-    m_robotDrive.feed();
+    ySpeed = MathUtil.clamp(ySpeed, -1.0, 1.0);
+    ySpeed = applyDeadband(ySpeed, 0.02);
+
+    xSpeed = MathUtil.clamp(xSpeed, -1.0, 1.0);
+    xSpeed = applyDeadband(xSpeed, 0.02);
+
+    Vector2d input = new Vector2d(ySpeed, xSpeed);
+    double[] wheelSpeeds = new double[4];
+    wheelSpeeds[0] = input.x + input.y + zRotation;
+    wheelSpeeds[1] = -input.x + input.y - zRotation;
+    wheelSpeeds[2] = -input.x + input.y + zRotation;
+    wheelSpeeds[3] = input.x + input.y - zRotation;
+
+    normalize(wheelSpeeds);
+
+    frontLeft.set(ControlMode.PercentOutput, -wheelSpeeds[0]*Constants.kMaxSpeed);
+    rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*Constants.kMaxSpeed);
+    frontRight.set(ControlMode.PercentOutput, -wheelSpeeds[2]*Constants.kMaxSpeed);
+    rearRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*Constants.kMaxSpeed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  protected double applyDeadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
+  }
+
+  protected void normalize(double[] wheelSpeeds) {
+    double maxMagnitude = Math.abs(wheelSpeeds[0]);
+    for (int i = 1; i < wheelSpeeds.length; i++) {
+      double temp = Math.abs(wheelSpeeds[i]);
+      if (maxMagnitude < temp) {
+        maxMagnitude = temp;
+      }
+    }
+    if (maxMagnitude > 1.0) {
+      for (int i = 0; i < wheelSpeeds.length; i++) {
+        wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+      }
+    }
   }
 }

@@ -9,18 +9,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ControllerSubsystem extends SubsystemBase {
-  private static final int kJoystickChannel = 0;
-  private static final double kSpeed = 0.4;
-  
   private XboxController m_stick;
 
   /**
    * Creates a new DriveSubsystem.
    */
   public ControllerSubsystem() {
-    m_stick = new XboxController(kJoystickChannel);
+    m_stick = new XboxController(Constants.kJoystickChannel);
   }
 
   @Override
@@ -35,11 +33,11 @@ public class ControllerSubsystem extends SubsystemBase {
       if(m_stick.getRawButton(6))
         return 0.0;
       else
-        return -1.0;
+        return 1.0;
     }
     else
       if(m_stick.getRawButton(6))
-        return 1.0;
+        return -1.0;
       else
         return 0.0;
   }
@@ -51,6 +49,6 @@ public class ControllerSubsystem extends SubsystemBase {
 
   public double getXSpeed()
   {
-    return -1*kSpeed*m_stick.getRawAxis(1);
+    return -1*m_stick.getRawAxis(1);
   }
 }
