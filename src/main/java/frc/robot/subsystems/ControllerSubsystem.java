@@ -44,11 +44,11 @@ public class ControllerSubsystem extends SubsystemBase {
 
   public double getYSpeed()
   {
-    return m_stick.getRawAxis(4);
+    return m_stick.getRawAxis(1);
   }
 
   public double getXSpeed()
   {
-    return -1*m_stick.getRawAxis(1);
+    return -1*m_stick.getRawAxis(4);
   }
 }
