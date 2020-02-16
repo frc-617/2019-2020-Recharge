@@ -27,7 +27,6 @@ public class RobotContainer {
 
   private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem);
 
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */

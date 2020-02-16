@@ -28,16 +28,16 @@ public class ControllerSubsystem extends SubsystemBase {
 
   public double getZRotation() 
   {
-    if(m_stick.getRawButton(5))
+    if(m_stick.getRawAxis(2) > 0.05)
     {
-      if(m_stick.getRawButton(6))
+      if(m_stick.getRawAxis(3) > 0.05)
         return 0.0;
       else
-        return 1.0;
+        return m_stick.getRawAxis(2);
     }
     else
-      if(m_stick.getRawButton(6))
-        return -1.0;
+      if(m_stick.getRawAxis(3) > 0.05)
+        return -m_stick.getRawAxis(3);
       else
         return 0.0;
   }

@@ -20,8 +20,8 @@ public final class Constants {
     
     public static int kJoystickChannel = 0;
     
-    public static int kFrontLeftChannel = 2;
-    public static int kRearLeftChannel = 4;
-    public static int kFrontRightChannel = 3;
-    public static int kRearRightChannel = 1;
+    public static int kFrontLeftChannel = 1;
+    public static int kRearLeftChannel = 3;
+    public static int kFrontRightChannel = 0;
+    public static int kRearRightChannel = 2;
 }
