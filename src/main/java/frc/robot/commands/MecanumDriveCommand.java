@@ -26,6 +26,6 @@ public class MecanumDriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_driveSubsystem.mecanumDrive(m_controllerSubsystem.getYSpeed(), m_controllerSubsystem.getXSpeed(), m_controllerSubsystem.getZRotation());
+    m_driveSubsystem.mecanumDrive(m_controllerSubsystem.getForwardSpeed(), m_controllerSubsystem.getSideSpeed(), m_controllerSubsystem.getZRotation());
   }
 }
