@@ -31,13 +31,41 @@ public class DriveSubsystem extends SubsystemBase {
     rearRight = new VictorSPX(Constants.kRearRightChannel);
   }
 
+  public void setMotor(double speed, int motorNumber)
+  {
+    speed = applyDeadband(speed, Constants.kDeadBand);
+    speed = speed*Constants.kMaxSpeed;
+    switch ( motorNumber )
+    {
+      case 0 :
+        frontLeft.set(ControlMode.PercentOutput, speed);
+        break;
+      case 1 :
+        rearLeft.set(ControlMode.PercentOutput, speed);
+        break;
+      case 2 :
+        frontRight.set(ControlMode.PercentOutput, speed);
+        break;
+      case 3 :
+        rearRight.set(ControlMode.PercentOutput, speed);
+        break;
+    }
+  }
+
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation)
   {
     ySpeed = MathUtil.clamp(ySpeed, -1.0, 1.0);
     ySpeed = applyDeadband(ySpeed, 0.02);
 
     xSpeed = MathUtil.clamp(xSpeed, -1.0, 1.0);
-    xSpeed = applyDeadband(xSpeed, 0.02);
+    xSpeed = applyDeadband(xSpeed, Constants.kDeadBand);
+
+    if(Constants.squareInputs)
+    {
+      xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
+      ySpeed = Math.copySign(ySpeed * ySpeed, ySpeed);
+      zRotation = Math.copySign(zRotation * zRotation, zRotation);
+    }
 
     Vector2d input = new Vector2d(ySpeed, xSpeed);
     double[] wheelSpeeds = new double[4];

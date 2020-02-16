@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.MecanumDriveCommand;
+import frc.robot.commands.TestMotorCommand;
 import frc.robot.subsystems.ControllerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -22,10 +23,13 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ControllerSubsystem m_controllerSubsystem = new ControllerSubsystem();
+  private final XboxController m_stick = new XboxController(Constants.kJoystickChannel);
+
+  private final ControllerSubsystem m_controllerSubsystem = new ControllerSubsystem(m_stick);
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem);
+  private final TestMotorCommand m_testMotorCommand = new TestMotorCommand(m_driveSubsystem, m_controllerSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -56,6 +60,13 @@ public class RobotContainer {
   }
 
   public Command getTeleoptCommand() {
-    return m_mecanumDriveCommand;
+    if (!Constants.testMode)
+      return m_mecanumDriveCommand;
+    else
+      return m_testMotorCommand;
+  }
+
+  public Command getTestCommand() {
+    return null;
   }
 }

@@ -16,7 +16,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static double kMaxSpeed = 0.4;
+    public static boolean testMode = false;
+    public static boolean squareInputs = true;
+
+    public static double kMaxSpeed = 1.0;
+    public static double kDeadBand = 0.05;
     
     public static int kJoystickChannel = 0;
     
