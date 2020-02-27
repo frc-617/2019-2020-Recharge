@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Command m_teleoptCommand;
+  private Command[] m_teleoptCommands;
   private Command m_testCommand;
 
   private RobotContainer m_robotContainer;
@@ -92,11 +92,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_teleoptCommand = m_robotContainer.getTeleoptCommand();
-
-    if(m_autonomousCommand != null) {
-      m_teleoptCommand.schedule();
-    }
+    m_teleoptCommands = m_robotContainer.getTeleoptCommands();
+    scheduleArray(m_teleoptCommands);
   }
 
   /**
@@ -105,7 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // keep running our teleopt command
-    m_teleoptCommand.schedule();
+    scheduleArray(m_teleoptCommands);
   }
 
   @Override
@@ -126,5 +123,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     m_testCommand.schedule();
+  }
+
+  private void scheduleArray(Command[] commands) {
+    for(int i = 0; i < commands.length; i++)
+    {
+      commands[i].schedule();
+    }
   }
 }

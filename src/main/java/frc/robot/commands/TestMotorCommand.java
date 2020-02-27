@@ -34,22 +34,22 @@ public class TestMotorCommand extends CommandBase {
     // Set each individual motor based on buttons being pressed
 
     if(m_controllerSubsystem.getXButton())
-      m_driveSubsystem.setMotor(-m_controllerSubsystem.getForwardSpeed(), frontLeft);
+      m_driveSubsystem.setMotor(-m_controllerSubsystem.getLeftVertical(), frontLeft);
     else
       m_driveSubsystem.setMotor(0.0, frontLeft);
     
     if(m_controllerSubsystem.getAButton())
-      m_driveSubsystem.setMotor(-m_controllerSubsystem.getForwardSpeed(), rearLeft);
+      m_driveSubsystem.setMotor(-m_controllerSubsystem.getLeftVertical(), rearLeft);
     else
       m_driveSubsystem.setMotor(0.0, rearLeft);
     
     if(m_controllerSubsystem.getYButton())
-      m_driveSubsystem.setMotor(m_controllerSubsystem.getForwardSpeed(), frontRight);
+      m_driveSubsystem.setMotor(m_controllerSubsystem.getLeftVertical(), frontRight);
     else
       m_driveSubsystem.setMotor(0.0, frontRight);
     
     if(m_controllerSubsystem.getBButton())
-      m_driveSubsystem.setMotor(m_controllerSubsystem.getForwardSpeed(), rearRight);
+      m_driveSubsystem.setMotor(m_controllerSubsystem.getLeftVertical(), rearRight);
     else
       m_driveSubsystem.setMotor(0.0, rearRight);
   }

@@ -10,10 +10,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ClimbCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ControllerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,13 +29,24 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final XboxController m_stick = new XboxController(Constants.kJoystickChannel);
+  private final XboxController m_pilotController = new XboxController(Constants.kPilotJoystickChannel);
+  private final XboxController m_operatorController = new XboxController(Constants.kOperatorJoystickChannel);
 
-  private final ControllerSubsystem m_controllerSubsystem = new ControllerSubsystem(m_stick);
+  private final ControllerSubsystem m_pilotSubsystem = new ControllerSubsystem(m_pilotController);
+  private final ControllerSubsystem m_operatorSubsystem = new ControllerSubsystem(m_operatorController);
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
-  private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem);
-  private final TestMotorCommand m_testMotorCommand = new TestMotorCommand(m_driveSubsystem, m_controllerSubsystem);
+  private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_pilotSubsystem);
+  private final TestMotorCommand m_testMotorCommand = new TestMotorCommand(m_driveSubsystem, m_pilotSubsystem);
+  private final ClimbCommand m_climbCommand = new ClimbCommand(m_climbSubsystem, m_operatorSubsystem);
+  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_operatorSubsystem);
+  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem, m_operatorSubsystem); 
+
+  private final Command[] teleoptCommands = new Command[] {m_mecanumDriveCommand, m_climbCommand, m_intakeCommand, m_armCommand};
+  private final Command[] teleoptTestCommands = new Command[] {m_testMotorCommand};
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -59,11 +76,11 @@ public class RobotContainer {
     return null;
   }
 
-  public Command getTeleoptCommand() {
+  public Command[] getTeleoptCommands() {
     if (!Constants.testMode)
-      return m_mecanumDriveCommand;
+      return teleoptCommands;
     else
-      return m_testMotorCommand;
+      return teleoptTestCommands;
   }
 
   public Command getTestCommand() {

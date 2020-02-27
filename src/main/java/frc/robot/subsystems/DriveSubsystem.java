@@ -34,7 +34,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void setMotor(double speed, int motorNumber)
   {
     speed = applyDeadband(speed, Constants.kDeadBand);
-    speed = speed*Constants.kMaxSpeed;
+    speed = speed*Constants.kMaxDriveSpeed;
     switch ( motorNumber )
     {
       case 0 :
@@ -76,10 +76,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     normalize(wheelSpeeds);
 
-    frontLeft.set(ControlMode.PercentOutput, -wheelSpeeds[0]*Constants.kMaxSpeed);
-    rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*Constants.kMaxSpeed);
-    frontRight.set(ControlMode.PercentOutput, -wheelSpeeds[2]*Constants.kMaxSpeed);
-    rearRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*Constants.kMaxSpeed);
+    frontLeft.set(ControlMode.PercentOutput, -wheelSpeeds[0]*Constants.kMaxClimbSpeed);
+    rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*Constants.kMaxClimbSpeed);
+    frontRight.set(ControlMode.PercentOutput, -wheelSpeeds[2]*Constants.kMaxClimbSpeed);
+    rearRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*Constants.kMaxClimbSpeed);
   }
 
   @Override

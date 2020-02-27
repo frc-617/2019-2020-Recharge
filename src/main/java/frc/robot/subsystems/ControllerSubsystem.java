@@ -25,7 +25,10 @@ public class ControllerSubsystem extends SubsystemBase {
 
   }
 
-  public double getZRotation() 
+  /*
+   *  Method to return a double from (-1, 1) based on trigger inputs. Left is negative, right is positive.
+   */
+  public double getTriggers() 
   {
     if(m_stick.getRawAxis(2) > 0.0)
     {
@@ -41,12 +44,21 @@ public class ControllerSubsystem extends SubsystemBase {
         return 0.0;
   }
 
-  public double getForwardSpeed()
+  // Left joystick vertical direction
+  public double getLeftVertical()
   {
     return m_stick.getRawAxis(1);
   }
 
-  public double getSideSpeed()
+  // Right joystick vertical direction
+  public double getRightVertical()
+  {
+    return m_stick.getRawAxis(5);
+  }
+
+
+  // Right joystick horizontal direction
+  public double getRightHorizontal()
   {
     return -1*m_stick.getRawAxis(4);
   }

@@ -8,24 +8,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ControllerSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class MecanumDriveCommand extends CommandBase {
-  private final DriveSubsystem m_driveSubsystem;
+public class ClimbCommand extends CommandBase {
+  private final ClimbSubsystem m_climbSubsystem;
   private final ControllerSubsystem m_controllerSubsystem;
   
-  public MecanumDriveCommand(DriveSubsystem driveSubsystem, ControllerSubsystem controllerSubsystem) {
-    m_driveSubsystem = driveSubsystem;
+  public ClimbCommand(ClimbSubsystem climbSubsystem, ControllerSubsystem controllerSubsystem) {
+    m_climbSubsystem = climbSubsystem;
     m_controllerSubsystem = controllerSubsystem;
-    addRequirements(m_driveSubsystem, m_controllerSubsystem);
+    addRequirements(m_climbSubsystem, m_controllerSubsystem);
   }
 
   @Override
   public void execute() {
-    m_driveSubsystem.mecanumDrive(m_controllerSubsystem.getLeftVertical(), m_controllerSubsystem.getRightHorizontal(), m_controllerSubsystem.getTriggers());
+    m_climbSubsystem.Climb(m_controllerSubsystem.getRightVertical());;
   }
 }

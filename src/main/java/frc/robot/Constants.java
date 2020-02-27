@@ -19,13 +19,21 @@ public final class Constants {
     public static boolean testMode = false;
     public static boolean squareInputs = true;
 
-    public static double kMaxSpeed = 1.0;
+    public static double kMaxDriveSpeed = 1.0;
+    public static double kMaxClimbSpeed = 0.1;
+    public static double kMaxArmSpeed = 0.1;
+    public static double kMaxIntakeSpeed = 0.4;
     public static double kDeadBand = 0.05;
     
-    public static int kJoystickChannel = 0;
+    public static int kPilotJoystickChannel = 0;
+    public static int kOperatorJoystickChannel = 1;
     
     public static int kFrontLeftChannel = 1;
     public static int kRearLeftChannel = 3;
     public static int kFrontRightChannel = 0;
     public static int kRearRightChannel = 2;
+
+    public static int kClimbChannel = 0;
+    public static int kArmChannel = 1;
+    public static int kIntakeChannel = 2;
 }
