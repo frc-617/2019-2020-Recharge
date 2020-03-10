@@ -64,7 +64,9 @@ public class DriveSubsystem extends SubsystemBase {
     {
       xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
       ySpeed = Math.copySign(ySpeed * ySpeed, ySpeed);
+      
       zRotation = Math.copySign(zRotation * zRotation, zRotation);
+      System.out.println();
     }
 
     Vector2d input = new Vector2d(ySpeed, xSpeed);
@@ -77,7 +79,7 @@ public class DriveSubsystem extends SubsystemBase {
     normalize(wheelSpeeds);
 
     frontLeft.set(ControlMode.PercentOutput, -wheelSpeeds[0]*Constants.kMaxSpeed);
-    rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*Constants.kMaxSpeed);
+    rearLeft.set(ControlMode.PercentOutput, wheelSpeeds[1]*Constants.kMaxSpeed*1.5);
     frontRight.set(ControlMode.PercentOutput, -wheelSpeeds[2]*Constants.kMaxSpeed);
     rearRight.set(ControlMode.PercentOutput, wheelSpeeds[3]*Constants.kMaxSpeed);
   }

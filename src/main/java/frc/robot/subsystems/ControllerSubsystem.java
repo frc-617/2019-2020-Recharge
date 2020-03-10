@@ -70,4 +70,15 @@ public class ControllerSubsystem extends SubsystemBase {
   {
     return m_stick.getRawButton(4);
   }
+
+  public boolean getLeftBumper()
+  {
+    return m_stick.getRawButton(5);
+  }
+
+  public boolean getRightBumper()
+  {
+    return m_stick.getRawButton(6);
+  }
+
 }

@@ -95,8 +95,12 @@ public class Robot extends TimedRobot {
     m_teleoptCommand = m_robotContainer.getTeleoptCommand();
 
     if(m_autonomousCommand != null) {
+      //m_climbCommand.schedule();
       m_teleoptCommand.schedule();
+
+
     }
+    
   }
 
   /**
@@ -105,7 +109,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // keep running our teleopt command
-    m_teleoptCommand.schedule();
+    
+     m_teleoptCommand.schedule();
+    // m_climbCommand.schedule();
   }
 
   @Override

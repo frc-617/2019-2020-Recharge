@@ -10,10 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ControllerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,9 +31,13 @@ public class RobotContainer {
 
   private final ControllerSubsystem m_controllerSubsystem = new ControllerSubsystem(m_stick);
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 
-  private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem);
+  private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem, m_climbSubsystem, m_armSubsystem, m_intakeSubsystem);
   private final TestMotorCommand m_testMotorCommand = new TestMotorCommand(m_driveSubsystem, m_controllerSubsystem);
+  private final ClimbCommand m_climbCommand = new ClimbCommand(m_climbSubsystem, m_controllerSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -68,5 +76,9 @@ public class RobotContainer {
 
   public Command getTestCommand() {
     return null;
+  }
+
+  public Command getClimbCommand() {
+    return m_climbCommand;
   }
 }

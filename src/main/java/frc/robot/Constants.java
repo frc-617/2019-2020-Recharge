@@ -19,10 +19,14 @@ public final class Constants {
     public static boolean testMode = false;
     public static boolean squareInputs = true;
 
-    public static double kMaxSpeed = 1.0;
+    public static double kMaxSpeed = 1.25;
     public static double kDeadBand = 0.05;
+    public static double kMaxArmSpeed = 0.7;
     
     public static int kJoystickChannel = 0;
+    public static int kArmSpark = 1;
+    public static int kIntakeSpark = 0;
+    public static int kClimbSpark = 2;
     
     public static int kFrontLeftChannel = 1;
     public static int kRearLeftChannel = 3;
