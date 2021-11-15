@@ -95,10 +95,7 @@ public class Robot extends TimedRobot {
     m_teleoptCommand = m_robotContainer.getTeleoptCommand();
 
     if(m_autonomousCommand != null) {
-      //m_climbCommand.schedule();
       m_teleoptCommand.schedule();
-
-
     }
     
   }

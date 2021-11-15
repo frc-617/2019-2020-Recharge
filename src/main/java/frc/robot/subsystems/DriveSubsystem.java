@@ -33,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void setMotor(double speed, int motorNumber)
   {
-    speed = applyDeadband(speed, Constants.kDeadBand);
+    //speed = applyDeadband(speed, Constants.kDeadBand);
     speed = speed*Constants.kMaxSpeed;
     switch ( motorNumber )
     {

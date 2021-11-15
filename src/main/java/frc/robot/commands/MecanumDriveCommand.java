@@ -39,6 +39,7 @@ public class MecanumDriveCommand extends CommandBase {
   public void execute() {
     m_driveSubsystem.mecanumDrive(m_controllerSubsystem.getForwardSpeed(), m_controllerSubsystem.getSideSpeed(), m_controllerSubsystem.getZRotation());
     // System.out.println("Driving!");
+    /*
     if(m_controllerSubsystem.getAButton() == true) {
       m_climbSubsystem.Climb(1);
       System.out.println("Climbing now");
@@ -47,7 +48,6 @@ public class MecanumDriveCommand extends CommandBase {
       m_climbSubsystem.Climb(0.0);
     }
 
-    
     if(m_controllerSubsystem.getLeftBumper())
     {
       m_armSubsystem.MoveArm(-1); // This Might Be The Issue
@@ -77,5 +77,6 @@ public class MecanumDriveCommand extends CommandBase {
     else{
       m_intakeSubsystem.Intake(1);
     }
+  */
   }
 }
