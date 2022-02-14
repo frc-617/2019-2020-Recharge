@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ClimbCommand;
+import frc.robot.commands.ArmCommand;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -41,6 +42,7 @@ public class RobotContainer {
   private final MecanumDriveCommand m_mecanumDriveCommand = new MecanumDriveCommand(m_driveSubsystem, m_controllerSubsystem, m_climbSubsystem, m_armSubsystem, m_intakeSubsystem);
   private final TestMotorCommand m_testMotorCommand = new TestMotorCommand(m_driveSubsystem, m_controllerSubsystem);
   private final ClimbCommand m_climbCommand = new ClimbCommand(m_climbSubsystem, m_controllerSubsystem);
+  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_controllerSubsystem);
   private final AutonomousCommand autonomousCommand = new AutonomousCommand(2000, m_driveSubsystem);
 
   /**
@@ -60,9 +62,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_stick, Button.kA.value).whileHeld(m_climbCommand);
     //new JoystickButton(m_stick, Button.kA.value).whileHeld(new ClimbCommand(m_climbSubsystem, m_controllerSubsystem));
+    new JoystickButton(m_stick, Button.kX.value).whileHeld(m_armCommand);
   }
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -86,5 +87,8 @@ public class RobotContainer {
 
   public Command getClimbCommand() {
     return m_climbCommand;
+  }
+  public Command getArmCommand() {
+    return m_armCommand;
   }
 }
